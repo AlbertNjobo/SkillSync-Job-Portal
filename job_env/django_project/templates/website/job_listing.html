@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block content %}
+<section>
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+            <h2 class="display-5 fw-bold">Skillsync Services. Showcase your Skills!</h2>
+            <p class="col-md-8 fs-5 mt-3"> All Available Jobs</p>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% if jobs %}
+            {% for job in jobs %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ job.title }}</h5>
+                            <p class="card-text">Location: {{ job.city }}</p>
+                            <p class="card-text">Salary: {{ job.salary|intcomma }}</p>
+                            <p class="card-text">Posted by {{ job.company.name }}</p>
+                            <!-- Button to view job details -->
+                            <a href="{% url 'job-details' job.pk %}" class="btn btn-primary">View Details</a>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Created {{ job.timestamp|naturaltime }}</small>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<br>
+ 
+
+{% endblock content %}

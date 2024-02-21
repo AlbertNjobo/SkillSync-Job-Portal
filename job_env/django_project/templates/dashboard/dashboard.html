@@ -1,0 +1,63 @@
+{% extends 'base.html'%}
+
+{%block content%}
+{% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                <b>{{ message }}</b>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+{% if request.user.is_applicant %}
+{% if not request.user.has_resume %}
+<div class="alert alert-danger" role="alert">
+    <b>You are seeing this because you have not created any resume. Create one from <a href="{% url 'update-resume'%}">here</a></b>
+</div>
+
+{% endif %}
+
+<section >
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <h1 class="display-5 fw-bold">Custom <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Welcome to SkillSync Services.</h1>
+            <p class="col-md-8 fs-4">
+                Applicant Dashboard
+            </p>
+            <button class="btn btn-primary btn-lg" type="button">
+                Example button
+            </button>
+        </div>
+    </div>
+    </h1>
+    <p></p>
+</div>
+</section>
+
+{% elif request.user.is_recruiter  %}
+{% if not request.user.has_company %}
+<div class="alert alert-danger" role="alert">
+    <b>You are seeing this because you have not created any company. Create one from <a href="{% url 'update-company'%}">here</a></b>
+</div>
+
+{% endif %}
+<section >
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Welcome to SkillSync Services.</h1>
+            <p class="col-md-8 fs-4">
+                Recruiter Dashboard
+            </p>
+            <button class="btn btn-primary btn-lg" type="button">
+                Example button
+            </button>
+        </div>
+    </div>
+    </h1>
+    <p></p>
+</div>
+</section>
+
+{% endif %}
+{% endblock content %}

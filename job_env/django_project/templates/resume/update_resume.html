@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mx-auto" style="width: 40rem">
+        <div class="card-body">
+            <h5 class="card-title mb-3">
+                Create a profile
+
+            </h5>
+            
+            <form method="POST" anctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for ='exampleInputEmail' class="form-label">First name</label>
+                    {% render_field form.first_name class="form-control" %}
+
+                </div>
+                <div class="mb-3">
+                    <label for ='exampleInputEmail' class="form-label">Surname</label>
+                    {% render_field form.surname class="form-control" %}
+
+                </div>
+                <div class="mb-3">
+                    <label for ='exampleInputEmail' class="form-label">Location</label>
+                    {% render_field form.location class="form-control"%}
+
+                </div>
+                <div class="mb-3">
+                    <label for ='exampleInputEmail' class="form-label">Job Title</label>
+                    {% render_field form.job_title class="form-control"%}
+
+                </div>
+                <div class="mb-3">
+                <label for ='exampleInputEmail' class="form-label">Upload Resume</label>
+                {% render_field form.upload_resume class="form-control"%}
+
+            </div>
+     
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+
+    </div>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>SkillSync</title>
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            
+            <a class="navbar-brand" href="{% url 'home'%}">SkillSync</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent" >
+                {% if request.user.is_authenticated%}
+                {% if request.user.is_applicant %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                   
+                    {% if request.user.has_resume%}
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'job-listing' %}">Apply to Jobs</a>
+
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'applied-jobs' %}">Manage Job Applications</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'update-resume' %}">Create Profile</a>
+                    {% endif %} 
+
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="a" tabindex="-1" aria-disabled="true">{{request.user.email}}</a>
+                    </li>
+              
+                
+                </ul>
+                <a href="{%url 'logout'%}" class="btn btn-warning me-2 ">Logout</a>
+                    
+                {% elif request.user.is_recruiter%}
+                <ul class="navbar-nav me-auto mb-2 mb-lg0">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="a">Home</a>
+                    </li>
+                    {% if request.user.has_company  %}
+                    <li class="nav-item">
+                        <a class="nav-link " href="{%url 'create-job'%}">Create Ads</a>
+
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{%url 'manage-jobs'%}">Manage Jobs</a>
+
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link " href="{%url 'update_company'% }">Create Company</a>
+
+                    </li>
+                    {% endif %}
+                  
+                
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="a" tabindex="-1" aria-disabled="true">{{request.user.email}}</a>
+
+                </li>
+              
+                </ul>
+                <a href="{%url 'logout'%}" class="btn btn-warning me-2 ">Logout</a>
+                    
+                {% endif %}
+                {% else  %}
+                <ul class="navbar-nav me-auto mb-2 mb-lg0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'job-listing' %}">All Jobs</a>
+                    </li>
+                   
+              
+                    
+                        </ul>
+                 
+                
+                 
+                {%endif%}
+            </div>
+        </div>
+
+    </nav>
+    <div class="container mt-5">
+        {% if message %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}" role="alert">
+                <b>{{message}}</b>
+            </div>
+        {% endfor %}
+        {% endif %}
+        
+        {% block content%}
+        {% endblock content%}
+    
+    {% comment %} <section>
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class = "container-fluid py-5">
+                <h2 class="display-5 fw-bold">Skillsync Services. Showcase your Skills!</h2>" <br>
+                <div class="card">
+                    <div class="card-body">
+                        <form class="row gy-2 gx-3 align-items-center">
+                            <div class="col-sm-2">
+                                <label  class = "visually-hidden" for="autoSizingInput">Name</label>
+                                <input type="text" id="autoSizingInput"  class="form-control" placeholder="Job-Keyword"></div>
+                                <div class="col-sm-3">
+                                    <label class = "visually-hidden" for="autoSizingSelect">Select Location</label>
+                                    <select class ="form-select" id="autoSizingSelect">
+                                        <option selected>Select Location</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class = "visually-hidden" for="autoSizingSelect">Choose Job Type</label>
+                                    <select class="form-select" id="autoSizingSelect">
+                                        <option selected>Choose Job Type</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                    
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class = "visually-hidden" for="autoSizingSelect">Choose Job Type</label>
+                                    <select class="form-select" id="autoSizingSelect">
+                                        <option selected>Select Industry</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                    
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+                </div>
+                <p class="col-md-8 fs-6 mt-3">
+                    Find the best professionals in your industry and showcase your skills to increase your visibility,Showcasing your skills on Skillsync is easy and free to do.</p>
+                    <button type="button" class="btn btn-outline-primary">More Jobs</button>
+            </div>
+
+        </div>
+    </section> {% endcomment %}
+
+
+
+    {% comment %} <div class="row row-cols-1 row-cols-md-3 g-4"></div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Card Title</h5>
+                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, suscipit provident ipsa minus ea eum tempore iusto odit quaerat facilis qui, dolorum dolores! Repellendus ullam itaque nulla vitae repudiandae eligendi.</p>
+
+                </div>
+                <div class="card-footer">
+                    <small class ="text-muted">Last updated 3 mins ago</small>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Card Title</h5>
+                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, suscipit provident ipsa minus ea eum tempore iusto odit quaerat facilis qui, dolorum dolores! Repellendus ullam itaque nulla vitae repudiandae eligendi.</p>
+
+                </div>
+                <div class="card-footer">
+                    <small class ="text-muted">Last updated 3 mins ago</small>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Card Title</h5>
+                    <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odio, suscipit provident ipsa minus ea eum tempore iusto odit quaerat facilis qui, dolorum dolores! Repellendus ullam itaque nulla vitae repudiandae eligendi.</p>
+
+                </div>
+                <div class="card-footer">
+                    <small class ="text-muted">Last updated 3 mins ago</small>
+
+                </div>
+            </div>
+
+        </div> {% endcomment %}
+    {% comment %} <div class="row align-items-center">
+        <div class="col-md-10 mx-auto col-lg-2 mt-4">
+            <nav aria-label="...">
+                <ul class ="pagination">
+                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a>"
+                        <li class="page-item" ><a class="page-link" href="#">1</a></li>
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="#">2 </a>
+                        
+                        </li>
+                        <li class="page-item" ><a class="page-link" href="#">3</a></li>
+                        <li class="page-item" >
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+
+                </ul>
+
+            </nav>
+
+        </div>
+
+    </div> {% endcomment %}
+    </div>
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container-fluid text-center ">
+      <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+
+    
+</footer>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</body>
+</html>

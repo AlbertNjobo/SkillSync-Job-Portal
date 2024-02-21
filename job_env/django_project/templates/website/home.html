@@ -1,0 +1,79 @@
+{% extends 'base.html'%}
+{% load humanize %}
+{% load widget_tweaks %}
+{% block content%}
+<section>
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class = "container-fluid py-5">
+            <h2 class="display-5 fw-bold">Skillsync Services. Showcase your Skills!</h2> <br>
+            <div class="card">
+                <div class="card-body">
+                    <form class="row gy-2 gx-3 align-items-center" method = "GET">
+                        <div class="col-sm-2">
+                            <label   for="autoSizingInput">Name</label>
+                            {% render_field filter.form.title id="autoSizingInput"  class="form-control" placeholder="Job-Keyword"%}
+                        </div>
+                            <div class="col-sm-3">
+                                <label  for="autoSizingSelect">Select Location</label>
+                                {% render_field filter.form.province class="form-select" %}
+                              
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="autoSizingSelect">Choose Job Type</label>
+                                {% render_field filter.form.job_type class="form-select" %}
+                              
+                            </div>
+                            <div class="col-sm-3">
+                                <label  for="autoSizingSelect">Select Industry</label>
+                                {% render_field filter.form.industry  class="form-select" %}
+                              
+                            </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <p class="col-md-8 fs-6 mt-3">
+                Find the best professionals in your industry and showcase your skills to increase your visibility,Showcasing your skills on Skillsync is easy and free to do.</p>
+                <a href ="{% url 'job-listing' %}"class="btn btn-outline-primary">More Jobs</a>
+        </div>
+    </div>
+</section>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for job in filter.qs %}
+    <div class="col">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{job.title}}</h5>
+                <p class="card-text">Industry: {{job.industry}}</p>
+                <p class="card-text">Job Type: {{job.job_type}}</p>
+                <p class="card-text">Location: {{job.city}}, {{job.province}}</p>
+                <p class="card-text">Salary: {{job.salary}}</p>
+            </div>
+            <div class="card-footer">
+                <small class ="text-muted">{{job.timestamp|naturaltime}}</small>
+            </div>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+    
+
+<div class="row align-items-center">
+    <div class="col-md-10 mx-auto col-lg-2 mt-4">
+        <nav aria-label="...">
+            <ul class ="pagination">
+                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">2 </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+{% endblock content%}
